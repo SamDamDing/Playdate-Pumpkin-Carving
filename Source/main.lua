@@ -23,30 +23,30 @@ local needsRedraw = true -- Flag to check if we need to redraw
 
 -- Input Handlers
 function playdate.AButtonDown()
-    carving = true
+    carving = true -- A button changes the Carving mode boolean that enables us to draw on the pumpkin
 end
 
 function playdate.AButtonUp()
-    carving = false
+    carving = false -- Releasing means we aren't Carving anymore
 end
 
 function playdate.BButtonDown()
-    activeColor = not activeColor
+    activeColor = not activeColor -- B button Toggles the color or eraser.
 end
 
 function playdate.cranked(change, _)
-    angle += change
+    angle += change -- Unused (for now)
 end
 
 local offScreenBuffer = gfx.image.new(400, 240)
 
 -- Main update loop
 function playdate.update()
-    local hasMoved = false -- Flag to check if the carving tool has moved
+    local hasMoved = false -- Flag to check if the carving tool has moved (Unused but kept for debugging)
 
     -- D-pad movement
     if playdate.buttonIsPressed(playdate.kButtonLeft) then
-        carvingTool:moveBy(-1, 0)
+        carvingTool:moveBy(-1, 0) 
         hasMoved = true
     end
     if playdate.buttonIsPressed(playdate.kButtonRight) then
@@ -64,14 +64,13 @@ function playdate.update()
 
     if carving then
         local tipX, tipY = carvingTool:getPosition()
-        gfx.lockFocus(pumpkinImage)
-        --print(pumpkin:getImage():sample(tipX, tipY))
-        gfx.setColor(activeColor and gfx.kColorBlack or gfx.kColorClear)
-        if pumpkin:getImage():sample(tipX, tipY) == 1 then
-            gfx.drawPixel(tipX - 1, tipY - 1)
+        gfx.lockFocus(pumpkinImage)  -- We're editing the pumpkinImage layer
+        gfx.setColor(activeColor and gfx.kColorBlack or gfx.kColorClear)  -- Selects the right color.
+        if pumpkin:getImage():sample(tipX - 1, tipY - 1) == 1 then -- Checks the tip point for gfx.kColorWhite pixel to make sure we're staying in the bounds of the pumpkin
+            gfx.drawPixel(tipX - 1, tipY - 1) -- Draws the pixel at the tip offset by -1
         end
-        gfx.unlockFocus()
-        needsRedraw = true
+        gfx.unlockFocus() -- We're done with drawing. Unfocus the layer.
+        needsRedraw = true -- Unused (Kept for debugging)
     end
     gfx.sprite.update()
 --[[     if hasMoved or needsRedraw then
