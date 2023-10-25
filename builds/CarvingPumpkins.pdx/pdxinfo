@@ -1,0 +1,11 @@
+name=Pumpkin Carver
+author=MercyMoon
+description=A Pumpkin Carving Game
+bundleID=com.mercymoon.pumpkincarver
+version=0.0.1
+buildNumber=1
+imagePath=assets/images/card
+contentWarning=This game contains mild realistic carving with saws and knives.
+contentWarning2=This game contains flashing content that may not be suitable for photosensitive epilepsy.
+pdxversion=20000
+buildtime=751364653
